@@ -2,6 +2,7 @@
 target/*
 **/target
 .gradle
+.idea
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
