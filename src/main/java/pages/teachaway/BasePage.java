@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
+import static utils.settings.TeachAwaySettings.*;
+
 public class BasePage extends PageObject {
 
     @FindBy(xpath = "//ul[contains(@class,'megamenu-nav nav level-0')]")
@@ -31,5 +33,20 @@ public class BasePage extends PageObject {
     public void navigateTo(String url){
       getDriver().navigate().to(url);
     }
+    public String getActualUrl(){
+        return getDriver().getCurrentUrl();
+    }
 
+    public String createPageLinks(String pageName){
+        String link = "";
+        switch (pageName) {
+            case "Courses":
+                link = teachAwayBaseUrl + coursesPageUrl;
+                break;
+            case "Hire Teachers":
+                link = teachAwayBaseUrl+hireTeachersPageUrl;
+                break;
+        }
+        return link;
+    }
 }

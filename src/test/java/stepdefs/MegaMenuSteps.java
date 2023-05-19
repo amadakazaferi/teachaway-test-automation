@@ -6,19 +6,23 @@ import io.cucumber.java.en.When;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.Steps;
 import pages.teachaway.BasePage;
+import pages.teachaway.TitlesPage;
 import steps.MegaMenuUser;
+import utils.settings.TeachAwaySettings;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static utils.settings.TeachAwaySettings.teachAwayBaseUrl;
 
 public class MegaMenuSteps  {
 
     private BasePage basePage;
+    private TitlesPage titlesPage;
     @Steps(shared = true)
     private MegaMenuUser megaMenuUser;
+
+    private String expectedLandingPageLink;
 
     @Given("a user navigates to Teach Away website")
     public void userNavigateToPage() {
@@ -44,5 +48,29 @@ public class MegaMenuSteps  {
              index++;
         }
 
+    }
+
+    @When("user clicks on {string}")
+    public void userClicksOnClickableMenuOptions(String menuItemName) {
+                expectedLandingPageLink = basePage.createPageLinks(menuItemName);
+                megaMenuUser.clickOnMenuItem(menuItemName);
+
+    }
+
+    @Then("user is landed to the corresponding page with {string}")
+    public void userIsLandedToTheCorrespondingPage(String expectedTitle) {
+        String actualPageTitle = titlesPage.getLandingPageTitle().getText();
+        assertEquals(expectedTitle, actualPageTitle);
+        assertEquals(expectedLandingPageLink, basePage.getActualUrl());
+    }
+
+
+    @When("user hovers on {string}")
+    public void userHoversOn(String item) {
+
+    }
+
+    @Then("user verifies thw dropdown menu appears")
+    public void userVerifiesThwDropdownMenuAppears() {
     }
 }
